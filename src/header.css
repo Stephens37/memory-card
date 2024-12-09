@@ -1,0 +1,71 @@
+.headerGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.widHeit {
+    width: fit-content;
+    height: fit-content;
+}
+
+.gameInfo {
+    grid-column: 1;
+}
+
+.gameGrid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr 5fr 1fr;
+}
+
+.gameTitle {
+    grid-row: 1;
+    grid-column: 2;
+    font-family: 'Parkinsons', sans-serif;
+    font-size: 40px;
+}
+
+.gameInst {
+    grid-row: 2;
+    grid-column: 2;
+    align-self: center;
+    font-family: 'Avro', serif;
+    font-size: 17px;
+}
+
+.scoreInfo {
+    grid-column: 2;
+}
+
+.scoreGrid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.cur {
+    grid-column: 2;
+    align-self: center;
+}
+
+.high {
+    grid-column: 3;
+    align-self: center;
+}
+
+.scoreFont {
+    font-family: 'Avro', serif;
+    font-size: 20px;
+}
+
+.curScoreTitle {
+    margin-right: 10px;
+    font-family: 'Avro', serif;
+}
+
+.highScoreTitle {
+    margin-right: 10px;
+    font-family: 'Avro', serif;
+}
+
