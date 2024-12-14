@@ -1,0 +1,26 @@
+.pokeCard {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3fr 1fr;
+    height: 300px;
+    width: 200px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.pokeImage {
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    height: 80%;
+    width: 80%;
+    border-radius: 5px;
+}
+
+.pokeText {
+    grid-row: 2;
+    justify-self: center;
+    align-self: center;
+    height: fit-content;
+    width: fit-content;
+}
