@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import './card.css'
 
 export default function Card ({ pokeName, onClick }) {
     console.log(pokeName)
-    const pokeImage = document.querySelector('.pokeImage')
-    const nameDiv = document.querySelector('.pokeText')
+    const [pokeImageSrc, setPokeImageSrc] = useState('')
+    const [nameText, setNameText] = useState('')
+    const [error, setError] = useState('')
     useEffect(() => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`, {
             mode: 'cors'
@@ -13,16 +14,20 @@ export default function Card ({ pokeName, onClick }) {
             return response.json();
         })
         .then(function (response) {
-            pokeImage.src = response.sprites.front_default
+            setPokeImageSrc(response.sprites.front_default)
         })
         .then(function (response) {
-            nameDiv.innerText = response.name
+            setNameText(response.name)
+        })
+        .catch(error => {
+            setError(error)
+            console.log(error)
         })
     }, [pokeName])
     return (
         <div className='pokeCard'>
-            <img className='pokeImage'></img>
-            <div className='pokeText'></div>
+            <img className='pokeImage' src={pokeImageSrc}></img>
+            <div className='pokeText'>{nameText}</div>
         </div>
     )
 }
