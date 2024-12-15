@@ -11,7 +11,8 @@ export default function CardDeck () {
     function deckSet () {
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
-            console.log(randomName)
+            console.log(pokemonArr[getRandomInt(pokemonArr.length)])
+            //console.log(randomName)
             return <Card pokeName={randomName} onClick={deckSet} key={randomName}></Card>
     })
         setCards(newSet)

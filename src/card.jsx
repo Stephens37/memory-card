@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import './card.css'
 
-export default function Card (pokeName) {
-    pokeName = 'squirtle'
-    const img = document.querySelector('img')
+export default function Card ({ pokeName, onClick }) {
+    console.log(pokeName)
+    const pokeImage = document.querySelector('.pokeImage')
     const nameDiv = document.querySelector('.pokeText')
     useEffect(() => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`, {
@@ -13,7 +13,7 @@ export default function Card (pokeName) {
             return response.json();
         })
         .then(function (response) {
-            img.src = response.sprites.front_default
+            pokeImage.src = response.sprites.front_default
         })
         .then(function (response) {
             nameDiv.innerText = response.name
