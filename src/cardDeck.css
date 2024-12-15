@@ -1,0 +1,10 @@
+.cardDeckGridChild {
+    grid-column: 1 / span 3;
+    grid-row: 3;
+}
+
+.cardDeckDisplay {
+    display: grid;
+    grid-template-columns: repeat(4 / 1fr);
+    grid-template-rows: 1fr 1fr;
+}

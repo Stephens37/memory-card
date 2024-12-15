@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import './card.css'
 
 export default function Card (pokeName) {
+    pokeName = 'squirtle'
     const img = document.querySelector('img')
-    const nameDiv = document.querySelector('div')
+    const nameDiv = document.querySelector('.pokeText')
     useEffect(() => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/{pokeName}`, {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokeName}`, {
             mode: 'cors'
           })
         .then(function (response) {

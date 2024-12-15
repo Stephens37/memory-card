@@ -1,4 +1,5 @@
 import Header from './header.jsx'
+import CardDeck from './cardDeck.jsx'
 import './index.css'
 
 export default function App () {
@@ -14,6 +15,7 @@ export default function App () {
                     <div className='whiteBottom'></div>
                 </div>
             </div>
+            <CardDeck></CardDeck>
         </>
     )
 }
