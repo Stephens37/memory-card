@@ -16,8 +16,8 @@ export default function Card ({ pokeName, onClick }) {
         .then(function (response) {
             setPokeImageSrc(response.sprites.front_default)
         })
-        .then(function (response) {
-            setNameText(response.name)
+        .then(function () {
+            setNameText(pokeName.toUpperCase())
         })
         .catch(error => {
             setError(error)

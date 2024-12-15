@@ -11,7 +11,25 @@ export default function CardDeck () {
     function deckSet () {
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
-            return <Card pokeName={randomName} onClick={deckSet} key={randomName}></Card>
+            const thesePokemon = []
+            function checkDuplicates(inputedName, thisArr) {
+                for (let i = 0; i < thisArr.length; i++) {
+                    if (inputedName === thisArr[i]) {
+                        checkDuplicates()
+                    } else if (inputedName !== thisArr[i] && thisArr.length === 8) {
+                        thesePokemon = []
+                        console.log(inputedName)
+                        return inputedName
+                    } else if (inputedName !== thisArr[i] && thisArr.length < 8) {
+                        thesePokemon.push(inputedName)
+                        console.log(inputedName)
+                        return inputedName
+                    }
+                }
+            }
+            console.log(checkDuplicates(randomName, thesePokemon))
+            const thisCardName = checkDuplicates(randomName, thesePokemon)
+            return <Card pokeName={thisCardName} onClick={deckSet} key={thisCardName}></Card>
     })
         setCards(newSet)
     }
