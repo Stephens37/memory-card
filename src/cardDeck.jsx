@@ -12,46 +12,42 @@ export default function CardDeck () {
         return Math.floor(Math.random() * max);
     }
 
-    function checkDuplicates(inputedName, limitNum) {
-        console.log(inputedName)
-        console.log(limitNum)
-        for (let i = 0; i < limitNum; i++) {
-            console.log('d')
+    function checkDuplicates(checkDupName, curArr) {
+        console.log(curArr)
+        for (let i = 0; i < curArr.length; i++) {
+            if (checkDupName === curArr[i].key) {
+                const newName = pokemonArr[getRandomInt(pokemonArr.length)]
+                checkDupName = newName
+                checkDuplicates(checkDupName, thesePokeArr)
+            }
+        }
+        return checkDupName
+    }
+
+    function checkInputName(inputedName) {
+        for (let i = 0; i < 8; i++) {
             console.log(thesePokeArr.length)
             if (thesePokeArr.length === 0) {
                 thesePokeArr.push({name: inputedName, key: inputedName})
+                return inputedName
             } else {
-                for (let i = 0; i < thesePokeArr.length; i++) {
-                    console.log(thesePokeArr[i])
-                    console.log('onetime')
-                    const pokeIt = thesePokeArr[i].key
-                    if (inputedName === pokeIt) {
-                        console.log('hi')
-                        console.log(inputedName)
-                        console.log(JSON.stringify(thesePokeArr[i].key))
-                        const newName = pokemonArr[getRandomInt(pokemonArr.length)]
-                        checkDuplicates(newName, 8)
-                    } 
-                }
-                    if (thesePokeArr.length === limitNum) {
-                        console.log(inputedName)
+                    inputedName = checkDuplicates(inputedName, thesePokeArr)
+                    if (thesePokeArr.length === 8) {
                         thesePokeArr = []
-                        console.log('hello')
                         return inputedName
-                    } else if (thesePokeArr.length < limitNum) {
-                        console.log(inputedName)
+                    } else if (thesePokeArr.length < 8) {
                         thesePokeArr.push({name: inputedName, key: inputedName})
-                        console.log('yo')
                         return inputedName
                     }
                 }
             }
-            return inputedName
+            console.log('bye')
         }
     function deckSet () {
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
-            const thisCardName = checkDuplicates(randomName, 8)
+            const thisCardName = checkInputName(randomName)
+
             return <Card pokeName={thisCardName} onClick={deckSet} key={thisCardName}></Card>
     })
     setCards(newSet)
