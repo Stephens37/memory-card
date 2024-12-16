@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import './card.css'
 
 export default function Card ({ pokeName, onClick }) {
-    console.log(pokeName)
     const [pokeImageSrc, setPokeImageSrc] = useState('')
     const [nameText, setNameText] = useState('')
     const [error, setError] = useState('')
