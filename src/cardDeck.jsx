@@ -1,4 +1,5 @@
 import './cardDeck.css'
+import Header from './header.jsx'
 import Card from './card.jsx'
 import { useEffect, useState } from 'react'
 
@@ -63,10 +64,15 @@ export default function CardDeck () {
         console.log('hi')
         deckSet()
     }, [])
+    const [scoreInc, setScoreInc] = useState(0)
+    const [highScore, setHighScore] = useState(0)
     return(
-        <div className='cardDeckGridChild'>
-            <div className='cardDeckDisplay'>{cards}</div>
-        </div>
+        <>
+            <Header/>
+            <div className='cardDeckGridChild'>
+                <div className='cardDeckDisplay'>{cards}</div>
+            </div>
+        </>
     )
 }
 

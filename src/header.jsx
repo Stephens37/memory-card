@@ -1,6 +1,6 @@
 import './header.css'
 
-export default function Header () {
+export default function Header (headCurScore, headHighScore) {
     return (
         <header>
             <div className='headerGrid'>
@@ -14,15 +14,25 @@ export default function Header () {
                     <div className='scoreGrid'>
                         <div className='cur widHeit'>
                             <span className='curScoreTitle widHeit scoreFont'>Current Score:</span>
-                            <span className='curScoreDigit widHeit scoreFont'>0</span>
+                            <span className='curScoreDigit widHeit scoreFont'>{headCurScore}</span>
                         </div>
                         <div className='high widHeit'>
                             <span className='highScoreTitle widHeit scoreFont'>High Score:</span>
-                            <span className='highScoreDigit widHeit scoreFont'>0</span>
+                            <span className='highScoreDigit widHeit scoreFont'>{headHighScore}</span>
                         </div>
                     </div>
                 </span>
             </div>
+            <div className='pokeBallMiddle'>
+                <div className='buttonGrid'>
+                    <div className='blackMiddle'></div>
+                    <div className='pokeBallButton'>
+                        <div className='buttonCenter'></div>
+                    </div>
+                    <div className='whiteBottom'></div>
+                </div>
+            </div>
         </header>
+
     )
 }
