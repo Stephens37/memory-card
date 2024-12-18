@@ -15,17 +15,20 @@ export default function CardDeck () {
     function checkDuplicates(checkDupName, curArr) {
         for (let i = 0; i < curArr.length; i++) {
             console.log(i)
+            console.log(checkDupName)
             if (checkDupName === curArr[i].key) {
                 console.log(checkDupName)
                 console.log(curArr[i].key)
                 const newName = pokemonArr[getRandomInt(pokemonArr.length)]
                 console.log(newName)
-                checkDuplicates(newName, thesePokeArr)
-            } else {
+                return checkDuplicates(newName, thesePokeArr)
+            } else if (i === (curArr.length - 1) && checkDupName !== curArr[i]) {
                 console.log(checkDupName)
                 return checkDupName
             }
         }
+        console.log(checkDupName)
+        return checkDupName
     }
 
     function checkInputName(inputedName) {
