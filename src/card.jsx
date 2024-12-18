@@ -24,9 +24,11 @@ export default function Card ({ pokeName, onClick }) {
         })
     }, [pokeName])
     return (
-        <div className='pokeCard'>
-            <img className='pokeImage' src={pokeImageSrc}></img>
-            <div className='pokeText'>{nameText}</div>
+        <div className='pokeCardGridChild'>
+            <div className='pokeCard'>
+                <img className='pokeImage' src={pokeImageSrc}></img>
+                <div className='pokeText'>{nameText}</div>
+            </div>
         </div>
     )
 }

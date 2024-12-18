@@ -1,9 +1,15 @@
+.pokeCardGridChild {
+    height: 250px;
+    justify-self: center;
+    align-self: center;
+}
+
 .pokeCard {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 3fr 1fr;
-    height: 300px;
-    width: 200px;
+    height: 200px;
+    width: 150px;
     border: 2px solid black;
     border-radius: 5px;
 }
