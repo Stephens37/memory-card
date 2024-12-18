@@ -55,11 +55,10 @@ export default function CardDeck () {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
             console.log(thesePokeArr)
             const thisCardName = checkInputName(randomName).inputedName
-            
             return <Card pokeName={thisCardName} onClick={deckSet} key={thisCardName}></Card>
     })
     setCards(newSet)
-    }   
+    }
     useEffect(() => {
         console.log('hi')
         deckSet()
