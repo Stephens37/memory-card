@@ -15,37 +15,26 @@ export default function CardDeck () {
 
     function checkDuplicates(checkDupName, curArr) {
         for (let i = 0; i < curArr.length; i++) {
-            console.log(i)
-            console.log(checkDupName)
             if (checkDupName === curArr[i].key) {
-                console.log(checkDupName)
-                console.log(curArr[i].key)
                 const newName = pokemonArr[getRandomInt(pokemonArr.length)]
-                console.log(newName)
                 return checkDuplicates(newName, thesePokeArr)
             } else if (i === (curArr.length - 1) && checkDupName !== curArr[i]) {
-                console.log(checkDupName)
                 return checkDupName
             }
         }
-        console.log(checkDupName)
         return checkDupName
     }
 
     function checkInputName(inputedName) {
             if (thesePokeArr.length === 0) {
                 thesePokeArr.push({name: inputedName, key: inputedName})
-                console.log(thesePokeArr)
                 return {thesePokeArr, inputedName}
             } else {
                     inputedName = checkDuplicates(inputedName, thesePokeArr)
-                    console.log(inputedName)
                     if (thesePokeArr.length === 7) {
                         thesePokeArr = []
-                        console.log(thesePokeArr)
                         return {thesePokeArr, inputedName}
                     } else if (thesePokeArr.length < 7) {
-                        console.log(thesePokeArr)
                         thesePokeArr.push({name: inputedName, key: inputedName})
                         return {thesePokeArr, inputedName}
                     }
@@ -57,38 +46,50 @@ export default function CardDeck () {
     const [highScore, setHighScore] = useState(0)
 
     function scoreKeeping (scoreName) {
-        for (let i = 0; i < pokemonClickedArr.length; i++) {
-            if (scoreName.key === undefined) {
-                setScoreInc(0)
-                return
-            } else if (pokemonClickedArr.length === 0 && scoreInc === 0) {
-                setPokemonClickedArr[scoreName.key]
-                setScoreInc(1)
-                return
-            } else if (pokemonClickedArr[i].key === scoreName.key) {
-                if (highScore < scoreInc) {
-                    setHighScore(scoreInc)
+        console.log(scoreName)
+        console.log(scoreInc)
+        if (pokemonClickedArr.length === 0 && highScore === 0 && scoreInc === undefined) {
+            console.log('a')
+            setScoreInc(0)
+            return
+        } else if (pokemonClickedArr.length === 0 && scoreInc === 0) {
+            console.log('b')
+            setPokemonClickedArr([scoreName.key])
+            setScoreInc(1)
+            return
+        } else {
+            for (let i = 0; i < pokemonClickedArr.length; i++) {
+                console.log('c')
+                if (pokemonClickedArr[i].key === scoreName.key) {
+                    console.log('d')
+                    if (highScore < scoreInc) {
+                        console.log('e')
+                        setHighScore(scoreInc)
+                        return
+                    } setPokemonClickedArr([])
+                    setScoreInc(0)
                     return
-                } setPokemonClickedArr([])
-                setScoreInc(0)
-                return
-            } else if (pokemonClickedArr[i].key !== scoreName.key && i === pokemonClickedArr.length && scoreInc < 20) {
-                setPokemonClickedArr((pokemonClickedArr) => [...pokemonClickedArr, scoreName.key])
-                setScoreInc((scoreInc) => scoreInc + 1)
-                return
-            } else if (pokemonClickedArr[i] !== scoreName.key && i === pokemonClickedArr.length && scoreInc === 20) {
-                alert('You Win!')
+                } else if (pokemonClickedArr[i].key !== scoreName.key && i === pokemonClickedArr.length && scoreInc < 20) {
+                    console.log('f')
+                    setPokemonClickedArr((pokemonClickedArr) => [...pokemonClickedArr, scoreName.key])
+                    setScoreInc((scoreInc) => scoreInc + 1)
+                    return
+                } else if (pokemonClickedArr[i] !== scoreName.key && i === pokemonClickedArr.length && scoreInc === 20) {
+                    console.log('g')
+                    alert('You Win!')
+                }
             }
         }
     }
 
-    function deckSet (clickedElement) {
+    function deckSet (clickedElement = undefined) {
+        console.log(clickedElement)
+        console.log(scoreInc)
         scoreKeeping(clickedElement)
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
-            console.log(thesePokeArr)
             const thisCardName = checkInputName(randomName).inputedName
-            return <Card pokeName={thisCardName} onClick={() => deckSet(this)} key={thisCardName}></Card>
+            return <Card pokeName={thisCardName} onClick={() => deckSet(thisCardName)} key={thisCardName}></Card>
     })
     setCards(newSet)
     }
