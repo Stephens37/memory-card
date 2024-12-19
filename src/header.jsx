@@ -1,6 +1,6 @@
 import './header.css'
 
-export default function Header (headCurScore, headHighScore) {
+export default function Header ({headCurScore, headHighScore}) {
     return (
         <header>
             <div className='headerGrid'>
@@ -33,6 +33,5 @@ export default function Header (headCurScore, headHighScore) {
                 </div>
             </div>
         </header>
-
     )
 }

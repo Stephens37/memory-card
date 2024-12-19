@@ -51,12 +51,44 @@ export default function CardDeck () {
                     }
                 }
             }
-    function deckSet () {
+
+    const [pokemonClickedArr, setPokemonClickedArr] = useState([])
+    const [scoreInc, setScoreInc] = useState()
+    const [highScore, setHighScore] = useState(0)
+
+    function scoreKeeping (scoreName) {
+        for (let i = 0; i < pokemonClickedArr.length; i++) {
+            if (scoreName.key === undefined) {
+                setScoreInc(0)
+                return
+            } else if (pokemonClickedArr.length === 0 && scoreInc === 0) {
+                setPokemonClickedArr[scoreName.key]
+                setScoreInc(1)
+                return
+            } else if (pokemonClickedArr[i].key === scoreName.key) {
+                if (highScore < scoreInc) {
+                    setHighScore(scoreInc)
+                    return
+                } setPokemonClickedArr([])
+                setScoreInc(0)
+                return
+            } else if (pokemonClickedArr[i].key !== scoreName.key && i === pokemonClickedArr.length && scoreInc < 20) {
+                setPokemonClickedArr((pokemonClickedArr) => [...pokemonClickedArr, scoreName.key])
+                setScoreInc((scoreInc) => scoreInc + 1)
+                return
+            } else if (pokemonClickedArr[i] !== scoreName.key && i === pokemonClickedArr.length && scoreInc === 20) {
+                alert('You Win!')
+            }
+        }
+    }
+
+    function deckSet (clickedElement) {
+        scoreKeeping(clickedElement)
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
             console.log(thesePokeArr)
             const thisCardName = checkInputName(randomName).inputedName
-            return <Card pokeName={thisCardName} onClick={deckSet} key={thisCardName}></Card>
+            return <Card pokeName={thisCardName} onClick={() => deckSet(this)} key={thisCardName}></Card>
     })
     setCards(newSet)
     }
@@ -64,11 +96,10 @@ export default function CardDeck () {
         console.log('hi')
         deckSet()
     }, [])
-    const [scoreInc, setScoreInc] = useState(0)
-    const [highScore, setHighScore] = useState(0)
+    
     return(
         <>
-            <Header/>
+            <Header headCurScore={scoreInc} headHighScore={highScore}/>
             <div className='cardDeckGridChild'>
                 <div className='cardDeckDisplay'>{cards}</div>
             </div>
