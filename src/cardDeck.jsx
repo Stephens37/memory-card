@@ -42,17 +42,18 @@ export default function CardDeck () {
             }
 
     const [pokemonClickedArr, setPokemonClickedArr] = useState([])
-    const [scoreInc, setScoreInc] = useState()
+    const [scoreInc, setScoreInc] = useState(-1)
     const [highScore, setHighScore] = useState(0)
 
     function scoreKeeping (scoreName) {
         console.log(scoreName)
         console.log(scoreInc)
-        if (pokemonClickedArr.length === 0 && highScore === 0 && scoreInc === undefined) {
+        if (pokemonClickedArr.length === 0 && highScore === 0 && scoreInc === -1) {
             console.log('a')
-            setScoreInc(0)
+            console.log(scoreInc)
+            setScoreInc((scoreInc) => scoreInc + 1)
             return
-        } else if (pokemonClickedArr.length === 0 && scoreInc === 0) {
+        } else if (scoreName !== undefined) {
             console.log('b')
             setPokemonClickedArr([scoreName.key])
             setScoreInc(1)
@@ -83,9 +84,11 @@ export default function CardDeck () {
     }
 
     function deckSet (clickedElement = undefined) {
+        console.log(scoreInc)
         console.log(clickedElement)
         console.log(scoreInc)
         scoreKeeping(clickedElement)
+        console.log(scoreInc)
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
             const thisCardName = checkInputName(randomName).inputedName
@@ -97,6 +100,9 @@ export default function CardDeck () {
         console.log('hi')
         deckSet()
     }, [])
+    useEffect(() => {
+        console.log('Updated scoreInc:', scoreInc)
+    }, [scoreInc])
     
     return(
         <>
