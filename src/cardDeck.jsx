@@ -58,6 +58,7 @@ export default function CardDeck () {
 
     function scoreKeeping (scoreName) {
         console.log(scoreName)
+        console.log(pokemonClickedArr)
         let curScoreInc = scoreIncRef.current
         let curPokeArr = pokeArrRef.current
         console.log(curScoreInc)
@@ -74,6 +75,8 @@ export default function CardDeck () {
             console.log(curPokeArr)
             for (let i = 0; i < curPokeArr.length; i++) {
                 console.log('c')
+                console.log(curPokeArr[i])
+                console.log(scoreName)
                 if (curPokeArr[i] === scoreName) {
                     console.log('d')
                     if (highScore < curScoreInc) {
@@ -83,12 +86,12 @@ export default function CardDeck () {
                     } setPokemonClickedArr([])
                     setScoreInc(0)
                     return
-                } else if (curPokeArr[i] !== scoreName && i === curPokeArr.length && scoreInc < 20) {
+                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc < 20) {
                     console.log('f')
                     setPokemonClickedArr((curPokeArr) => [...curPokeArr, scoreName.key])
                     setScoreInc((curScoreInc) => curScoreInc + 1)
                     return
-                } else if (curPokeArr[i] !== scoreName && i === curPokeArr.length && scoreInc === 20) {
+                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc === 20) {
                     console.log('g')
                     alert('You Win!')
                 }
