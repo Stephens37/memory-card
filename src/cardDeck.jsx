@@ -82,18 +82,22 @@ export default function CardDeck () {
                     if (highScore < curScoreInc) {
                         console.log('e')
                         setHighScore(curScoreInc)
-                        return
                     } setPokemonClickedArr([])
-                    setScoreInc(0)
+                    setScoreInc((curScoreInc) => curScoreInc - curScoreInc)
+                    console.log(curPokeArr)
+                    console.log(curScoreInc)
                     return
-                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc < 20) {
+                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc < 21) {
                     console.log('f')
-                    setPokemonClickedArr((curPokeArr) => [...curPokeArr, scoreName.key])
+                    setPokemonClickedArr((curPokeArr) => [...curPokeArr, scoreName])
                     setScoreInc((curScoreInc) => curScoreInc + 1)
                     return
-                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc === 20) {
+                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc === 21) {
                     console.log('g')
                     alert('You Win!')
+                    setHighScore(curScoreInc)
+                    setPokemonClickedArr([])
+                    setScoreInc((curScoreInc) => curScoreInc - curScoreInc)
                 }
             }
         }
@@ -110,7 +114,7 @@ export default function CardDeck () {
     }
     useEffect(() => {
         console.log('hi')
-        deckSet(undefined, scoreInc)
+        deckSet(undefined)
     }, [])
     useEffect(() => {
         console.log('Updated scoreInc:', scoreInc)
