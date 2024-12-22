@@ -45,22 +45,28 @@ export default function CardDeck () {
     const [scoreInc, setScoreInc] = useState(-1)
     const [highScore, setHighScore] = useState(0)
 
-    const scoreIncRef = useRef(scoreInc)
     const pokeArrRef = useRef(pokemonClickedArr)
+    const scoreIncRef = useRef(scoreInc)
+    const highScoreRef = useRef(highScore)
+
+    useEffect (() => {
+        pokeArrRef.current = pokemonClickedArr
+    }, [pokemonClickedArr])
 
     useEffect(() => {
         scoreIncRef.current = scoreInc
     }, [scoreInc])
 
     useEffect (() => {
-        pokeArrRef.current = pokemonClickedArr
-    }, [pokemonClickedArr])
+        highScoreRef.current = highScore
+    }, [highScore])
 
     function scoreKeeping (scoreName) {
         console.log(scoreName)
         console.log(pokemonClickedArr)
         let curScoreInc = scoreIncRef.current
         let curPokeArr = pokeArrRef.current
+        let curHighScore = highScoreRef.current
         console.log(curScoreInc)
         if (curPokeArr.length === 0 && highScore === 0 && curScoreInc === -1) {
             console.log('a')
@@ -79,7 +85,7 @@ export default function CardDeck () {
                 console.log(scoreName)
                 if (curPokeArr[i] === scoreName) {
                     console.log('d')
-                    if (highScore < curScoreInc) {
+                    if (curHighScore < curScoreInc) {
                         console.log('e')
                         setHighScore(curScoreInc)
                     } setPokemonClickedArr([])
