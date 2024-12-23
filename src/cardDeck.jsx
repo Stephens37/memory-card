@@ -71,11 +71,13 @@ export default function CardDeck () {
         if (curPokeArr.length === 0 && highScore === 0 && curScoreInc === -1) {
             console.log('a')
             setScoreInc((curScoreInc) => curScoreInc + 1)
+            console.log(curScoreInc)
             return
-        } else if (curPokeArr.length === 0 && curScoreInc === 0) {
+        } else if (curPokeArr.length === 0 && curScoreInc === 0 && scoreName !== undefined) {
             console.log('b')
             setPokemonClickedArr([scoreName])
             setScoreInc((curScoreInc) => curScoreInc + 1)
+            console.log(scoreInc)
             return
         } else {
             console.log(curPokeArr)
@@ -109,17 +111,64 @@ export default function CardDeck () {
         }
     }
 
+    const [clickDeckArr, setClickDeckArr] = useState([])
+    const clickDeckRef = useRef(clickDeckArr)
+
+    useEffect (() => {
+        clickDeckRef.current = clickDeckArr
+    }, [clickDeckArr])
+
+
     function deckSet (clickedElement = undefined) {
+        let clickDeckCur = clickDeckRef.current
+        let pokeArrCur = pokeArrRef.current
         scoreKeeping(clickedElement)
         const newSet = cards.map(() => {
             const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
             const thisCardName = checkInputName(randomName).inputedName
             return <Card pokeName={thisCardName} onClick={() => deckSet(thisCardName)} key={thisCardName}></Card>
     })
-    setCards(newSet)
+    /*
+        - within the deckSet function after orgSet
+        - create const checkIfClicked with an arrow function inside
+        - function starts with a loop which checks over all elements in pokemonArrRef
+        - inside of that loop, a new loop starts which checks over all elements in deckArr
+        - if two elements in each arr are the same, add them to clickDeckArr
+        - if clickDeckArr.length = 8 then run deckSet again
+        - else return deckArr
+        - setCards will then take checkIfClicked as a parameter
+    */
+
+    const checkIfClicked = () => {
+        console.log(pokeArrCur)
+        if(pokeArrCur.length === 0) {
+            return newSet
+        } else {
+            for(let i = 0; i < pokeArrCur.length; i++) {
+                for(let j = 0; j < newSet.length; j++) {
+                    console.log(clickDeckCur)
+                    if (pokeArrCur[i] === newSet[j].key) {
+                        console.log('dd')
+                        console.log(newSet[j].key)
+                        setClickDeckArr((clickDeckCur) => [...clickDeckCur, newSet[j].key])
+                        console.log(clickDeckCur)
+                    } else if (clickDeckCur.length === 8) {
+                        console.log('ee')
+                        console.log(clickDeckCur)
+                        return deckSet(undefined)
+                    } else if (clickDeckCur.length < 8 && i === pokeArrCur.length - 1) {
+                        console.log('ff')
+                        console.log(clickDeckCur)
+                        setClickDeckArr([])
+                        return newSet
+                    }
+                }
+            }
+        }
+    }
+    setCards(checkIfClicked)
     }
     useEffect(() => {
-        console.log('hi')
         deckSet(undefined)
     }, [])
     useEffect(() => {
