@@ -99,7 +99,7 @@ export default function CardDeck () {
                     return
                 } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc === 21) {
                     console.log('g')
-                    alert('You Win!')
+                    console.log('You Win!')
                     setHighScore(curScoreInc)
                     setPokemonClickedArr([])
                     setScoreInc((curScoreInc) => curScoreInc - curScoreInc)
@@ -118,22 +118,24 @@ export default function CardDeck () {
     })
 
     /*
-        - pokeArrCur is not updating in time for the checkIfClicked function to recognize the latest clicked pokemon
-        
-        - could be because scoreKeeping is being called after let pokeArrCur (nope, still not showing the last pokemon)
-
-        - need to be able to access the last array element before CardDeck rerenders
+        - occasional scoreName showing as undefined, presumable after deckSet triggers again
+        - score (might) still be skipping from 20 to 22, no high score/reset,
+        possible from presentPokeArr loop having one more iteration,
+        possible fix found in just returning func at 21, need to verify
     */
     const checkIfClicked = () => {
         console.log(pokeArrCur)
         let clickDeckCur = []
-        if(pokeArrCur.length === 0) {
+        let presentPokeArr = [...pokeArrCur, clickedElement]
+        if(presentPokeArr.length === 0) {
             return newSet
         } else {
-            for(let i = 0; i < pokeArrCur.length; i++) {
+            console.log(pokeArrCur)
+            console.log(presentPokeArr)
+            for(let i = 0; i <= presentPokeArr.length + 1; i++) {
                 for(let j = 0; j < newSet.length; j++) {
                     console.log(clickDeckCur)
-                    if (pokeArrCur[i] === newSet[j].key) {
+                    if (presentPokeArr[i] === newSet[j].key) {
                         console.log('dd')
                         console.log(newSet[j].key)
                         clickDeckCur.push(newSet[j].key)
@@ -142,11 +144,14 @@ export default function CardDeck () {
                         console.log('ee')
                         console.log(clickDeckCur)
                         return deckSet(undefined)
-                    } else if (clickDeckCur.length < 8 && i === pokeArrCur.length - 1) {
+                    } else if (clickDeckCur.length < 8 && i === presentPokeArr.length) {
+                        console.log(presentPokeArr.length)
                         console.log('ff')
                         console.log(clickDeckCur)
                         clickDeckCur = []
                         return newSet
+                    } else if (i === 21) {
+                        return
                     }
                 }
             }
