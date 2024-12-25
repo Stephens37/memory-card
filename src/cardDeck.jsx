@@ -122,42 +122,59 @@ export default function CardDeck () {
         - score (might) still be skipping from 20 to 22, no high score/reset,
         possible from presentPokeArr loop having one more iteration,
         possible fix found in just returning func at 21, need to verify
+
+        -score skipping because as deckSet is being called again, scoreKeeping is also called
     */
     const checkIfClicked = () => {
         console.log(pokeArrCur)
+        const regenSet = cards.map(() => {
+            const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
+            const thisCardName = checkInputName(randomName).inputedName
+            return <Card pokeName={thisCardName} onClick={() => deckSet(thisCardName)} key={thisCardName}></Card>
+        })
         let clickDeckCur = []
         let presentPokeArr = [...pokeArrCur, clickedElement]
         if(presentPokeArr.length === 0) {
-            return newSet
+            return clickedNewSet
         } else {
             console.log(pokeArrCur)
             console.log(presentPokeArr)
-            for(let i = 0; i <= presentPokeArr.length + 1; i++) {
-                for(let j = 0; j < newSet.length; j++) {
-                    console.log(clickDeckCur)
-                    if (presentPokeArr[i] === newSet[j].key) {
-                        console.log('dd')
-                        console.log(newSet[j].key)
-                        clickDeckCur.push(newSet[j].key)
+            function checkLoop (clickedLoopSet) {
+                for(let i = 0; i <= presentPokeArr.length + 1; i++) {
+                    for(let j = 0; j < clickedLoopSet.length; j++) {
                         console.log(clickDeckCur)
-                    } else if (clickDeckCur.length === 8) {
-                        console.log('ee')
-                        console.log(clickDeckCur)
-                        return deckSet(undefined)
-                    } else if (clickDeckCur.length < 8 && i === presentPokeArr.length) {
-                        console.log(presentPokeArr.length)
-                        console.log('ff')
-                        console.log(clickDeckCur)
-                        clickDeckCur = []
-                        return newSet
-                    } else if (i === 21) {
-                        return
+                        if (presentPokeArr[i] === clickedLoopSet[j].key) {
+                            console.log('dd')
+                            console.log(clickedLoopSet[j].key)
+                            clickDeckCur.push(clickedLoopSet[j].key)
+                            console.log(clickDeckCur)
+                        } else if (clickDeckCur.length === 8) {
+                            console.log('ee')
+                            console.log(clickDeckCur)
+                            clickDeckCur = []
+                            return checkLoop(regenSet)
+                        } else if (clickDeckCur.length < 8 && i === presentPokeArr.length) {
+                            console.log(presentPokeArr.length)
+                            console.log('ff')
+                            console.log(clickDeckCur)
+                            clickDeckCur = []
+                            return clickedLoopSet
+                        } else if (i === 21) {
+                            newSet === undefined
+                            return newSet
+                        }
                     }
                 }
             }
+            return checkLoop(newSet)
         }
     }
+
     setCards(checkIfClicked)
+    /*
+        - need to keep testing to ensure checkLoop(regenSet) logic works
+        - stop infinite loop when score reaches 21
+    */
     }
     useEffect(() => {
         deckSet(undefined)
