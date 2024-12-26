@@ -127,11 +127,7 @@ export default function CardDeck () {
     */
     const checkIfClicked = () => {
         console.log(pokeArrCur)
-        const regenSet = cards.map(() => {
-            const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
-            const thisCardName = checkInputName(randomName).inputedName
-            return <Card pokeName={thisCardName} onClick={() => deckSet(thisCardName)} key={thisCardName}></Card>
-        })
+        // regenSet returning same set each time, put it in loop to randomize
         let clickDeckCur = []
         let presentPokeArr = [...pokeArrCur, clickedElement]
         if(presentPokeArr.length === 0) {
@@ -140,10 +136,15 @@ export default function CardDeck () {
             console.log(pokeArrCur)
             console.log(presentPokeArr)
             function checkLoop (clickedLoopSet) {
-                for(let i = 0; i <= presentPokeArr.length + 1; i++) {
+                for(let i = 0; i <= presentPokeArr.length; i++) {
+                    console.log(i)
                     for(let j = 0; j < clickedLoopSet.length; j++) {
                         console.log(clickDeckCur)
-                        if (presentPokeArr[i] === clickedLoopSet[j].key) {
+                        console.log(i)
+                        if (i === 20) {
+                            newSet === undefined
+                            return newSet
+                        } else if (presentPokeArr[i] === clickedLoopSet[j].key) {
                             console.log('dd')
                             console.log(clickedLoopSet[j].key)
                             clickDeckCur.push(clickedLoopSet[j].key)
@@ -152,6 +153,11 @@ export default function CardDeck () {
                             console.log('ee')
                             console.log(clickDeckCur)
                             clickDeckCur = []
+                            const regenSet = cards.map(() => {
+                                const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
+                                const thisCardName = checkInputName(randomName).inputedName
+                                return <Card pokeName={thisCardName} onClick={() => deckSet(thisCardName)} key={thisCardName}></Card>
+                            })
                             return checkLoop(regenSet)
                         } else if (clickDeckCur.length < 8 && i === presentPokeArr.length) {
                             console.log(presentPokeArr.length)
@@ -159,9 +165,6 @@ export default function CardDeck () {
                             console.log(clickDeckCur)
                             clickDeckCur = []
                             return clickedLoopSet
-                        } else if (i === 21) {
-                            newSet === undefined
-                            return newSet
                         }
                     }
                 }
