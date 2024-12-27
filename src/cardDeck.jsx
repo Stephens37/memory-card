@@ -40,14 +40,21 @@ export default function CardDeck () {
                     }
                 }
             }
-
+    
+    const [topText, setTopText] = useState("Get points by clicking on an image but don't click on any more than once!")
+    
     const [pokemonClickedArr, setPokemonClickedArr] = useState([])
     const [scoreInc, setScoreInc] = useState(-1)
     const [highScore, setHighScore] = useState(0)
 
+    const topTextRef = useRef(topText)
     const pokeArrRef = useRef(pokemonClickedArr)
     const scoreIncRef = useRef(scoreInc)
     const highScoreRef = useRef(highScore)
+
+    useEffect (() => {
+        topTextRef.current = topText
+    }, [topText])
 
     useEffect (() => {
         pokeArrRef.current = pokemonClickedArr
@@ -62,6 +69,7 @@ export default function CardDeck () {
     }, [highScore])
 
     function scoreKeeping (scoreName) {
+        let curTopText = topTextRef.current
         let curScoreInc = scoreIncRef.current
         let curPokeArr = pokeArrRef.current
         let curHighScore = highScoreRef.current
@@ -73,6 +81,7 @@ export default function CardDeck () {
             return
         } else if (curPokeArr.length === 0 && curScoreInc === 0 && scoreName !== undefined) {
             console.log('b')
+            setTopText(() => "Get points by clicking on an image but don't click on any more than once!")
             setPokemonClickedArr([scoreName])
             setScoreInc((curScoreInc) => curScoreInc + 1)
             console.log(scoreInc)
@@ -80,27 +89,32 @@ export default function CardDeck () {
         } else {
             console.log(curPokeArr)
             for (let i = 0; i < curPokeArr.length; i++) {
-                console.log('c')
-                console.log(curPokeArr[i])
-                console.log(scoreName)
                 if (curPokeArr[i] === scoreName) {
                     console.log('d')
                     if (curHighScore < curScoreInc) {
                         console.log('e')
                         setHighScore(curScoreInc)
-                    } setPokemonClickedArr([])
+                    } 
+                    setTopText(() => 'Try Again')
+                    console.log(curTopText)
+                    setPokemonClickedArr([])
                     setScoreInc((curScoreInc) => curScoreInc - curScoreInc)
                     return
-                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc < 21) {
+                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && curScoreInc < 20) {
                     console.log('f')
+                    console.log(i)
+                    console.log(curScoreInc)
                     setPokemonClickedArr((curPokeArr) => [...curPokeArr, scoreName])
                     setScoreInc((curScoreInc) => curScoreInc + 1)
                     console.log(curPokeArr)
                     return
-                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && scoreInc === 21) {
+                } else if (curPokeArr[i] !== scoreName && i === (curPokeArr.length - 1) && curScoreInc === 20) {
                     console.log('g')
                     console.log('You Win!')
-                    setHighScore(curScoreInc)
+                    console.log(curScoreInc)
+                    setTopText(() => 'Game Over!')
+                    console.log(curTopText)
+                    setHighScore((curHighScore) => curScoreInc + 1)
                     setPokemonClickedArr([])
                     setScoreInc((curScoreInc) => curScoreInc - curScoreInc)
                 }
@@ -137,21 +151,17 @@ export default function CardDeck () {
             console.log(presentPokeArr)
             function checkLoop (clickedLoopSet) {
                 for(let i = 0; i <= presentPokeArr.length; i++) {
-                    console.log(i)
                     for(let j = 0; j < clickedLoopSet.length; j++) {
-                        console.log(clickDeckCur)
-                        console.log(i)
-                        if (i === 20) {
+                        if(newSet === undefined) {
+                            return
+                        }
+                        else if (i === 21) {
                             newSet === undefined
                             return newSet
                         } else if (presentPokeArr[i] === clickedLoopSet[j].key) {
-                            console.log('dd')
                             console.log(clickedLoopSet[j].key)
                             clickDeckCur.push(clickedLoopSet[j].key)
-                            console.log(clickDeckCur)
                         } else if (clickDeckCur.length === 8) {
-                            console.log('ee')
-                            console.log(clickDeckCur)
                             clickDeckCur = []
                             const regenSet = cards.map(() => {
                                 const randomName = pokemonArr[getRandomInt(pokemonArr.length)]
@@ -160,9 +170,6 @@ export default function CardDeck () {
                             })
                             return checkLoop(regenSet)
                         } else if (clickDeckCur.length < 8 && i === presentPokeArr.length) {
-                            console.log(presentPokeArr.length)
-                            console.log('ff')
-                            console.log(clickDeckCur)
                             clickDeckCur = []
                             return clickedLoopSet
                         }
@@ -188,7 +195,7 @@ export default function CardDeck () {
     
     return(
         <>
-            <Header headCurScore={scoreInc} headHighScore={highScore}/>
+            <Header headBodyText={topText} headCurScore={scoreInc} headHighScore={highScore}/>
             <div className='cardDeckGridChild'>
                 <div className='cardDeckDisplay'>{cards}</div>
             </div>

@@ -1,13 +1,13 @@
 import './header.css'
 
-export default function Header ({headCurScore, headHighScore}) {
+export default function Header ({headBodyText, headCurScore, headHighScore}) {
     return (
         <header>
             <div className='headerGrid'>
                 <span className='gameInfo'>
                     <div className='gameGrid'>
                         <h1 className='gameTitle widHeit'>Memory Card</h1>
-                        <h4 className='gameInst widHeit'>Get points by clicking on an image but don't click on any more than once!</h4>
+                        <h4 className='gameInst widHeit'>{headBodyText}</h4>
                     </div>
                 </span>
                 <span className='scoreInfo'>
